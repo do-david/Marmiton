@@ -1,13 +1,12 @@
 import React from 'react'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
 import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 import logo from '../../assets/cutlery.png'
 import loginL from '../../assets/enter.png' 
-import SignInComponent from '../signin'
-import HomeComponent from '../home'
+import { useHistory } from 'react-router-dom'
 
 const Header = () => {
+    const history = useHistory()
     const isDesktopOrLaptop = useMediaQuery({
         query: '(min-width: 1100px)'
       })
@@ -21,7 +20,6 @@ const Header = () => {
                 <li>Profil</li>
             </ul>
         </NavbarDesk>}
-        <Router>
         {isTabletOrMobile && <NavbarPhone>
             <MenuContainer>
                 <MenuToggle>
@@ -37,26 +35,13 @@ const Header = () => {
             </MenuToggle>
             </MenuContainer>
             <MenuContainer>
-                <Link to='/'>
-                    <ImageIcon src={logo} alt='Logo of app'/>
-                </Link>
-            <Title>Marmiton</Title>
+                <ImageIcon src={logo} alt='Logo of app' onClick={()=>history.push('/home')}/>
+                <Title>Marmiton</Title>
             </MenuContainer>
             <MenuContainer>
-            <Link to='/signin'>
-                <ImageIcon src={loginL} alt='Logo of login'/>
-            </Link>
+                <ImageIcon src={loginL} alt='Logo of login' onClick={()=>history.push('/')}/>
             </MenuContainer>
         </NavbarPhone>}
-        <Switch>
-            <Route path='/'>
-                <HomeComponent/>
-            </Route>
-            <Route path='/signin'>
-                <SignInComponent/>
-            </Route>
-        </Switch>
-        </Router>
         </div>
     )
 }
