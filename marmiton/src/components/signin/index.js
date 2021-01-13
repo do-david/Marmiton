@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import {useHistory} from 'react-router-dom'
+import {useHistory, useLocation } from 'react-router-dom'
 import axios from 'axios'
+
 
 const SignInComponent = () => {
     const [formState,setFormState] = useState({username:'',password:''})
@@ -23,12 +24,18 @@ const SignInComponent = () => {
         })
         .then(res => {
             localStorage.setItem('token',res.headers['x-access-token'])
-            history.push('/home')
+            Login({history})
         })
         .catch(err => {
             setErrorMessage('Error servor, please try again')
-            console.log(err.message)
+            console.log(err)
         })
+    }
+    const Login = ({history}) => {
+        const token = localStorage.getItem('token')
+        if(token){
+            history.push('/user')
+        }
     }
     return (
         <div>
@@ -44,7 +51,6 @@ const SignInComponent = () => {
             </StyledDiv>
             <StyledLabelError>{errorMessage}</StyledLabelError>
             <StyledInput type='submit'></StyledInput>
-           
             </StyledForm>
         </div>
     )

@@ -1,9 +1,10 @@
-import React from 'react'
+import React, {useState, useEffect} from 'react'
 import { useMediaQuery } from 'react-responsive'
 import styled from 'styled-components'
 import logo from '../../assets/cutlery.png'
 import loginL from '../../assets/enter.png' 
-import { useHistory } from 'react-router-dom'
+import { useHistory, useLocation } from 'react-router-dom'
+import LogoutButton from '../buttons/logoutButton'
 
 const Header = () => {
     const history = useHistory()
@@ -11,6 +12,16 @@ const Header = () => {
         query: '(min-width: 1100px)'
       })
     const isTabletOrMobile = useMediaQuery({ query: '(max-width: 1099px)' })
+    const [isAuthenticated, setIsAuthenticated] = useState(false)
+    const IsToken= ()=>{
+        const isToken = localStorage.getItem('token')
+        if(isToken){
+            return true
+        }
+        else{
+            return false
+        }
+    }
     return (
         <div>
         {isDesktopOrLaptop && <NavbarDesk>
@@ -39,7 +50,10 @@ const Header = () => {
                 <Title>Marmiton</Title>
             </MenuContainer>
             <MenuContainer>
-                <ImageIcon src={loginL} alt='Logo of login' onClick={()=>history.push('/')}/>
+                {IsToken() ? (<LogoutButton/>) : (<ImageIcon src={loginL} alt='Logo of login' onClick={()=>{
+                    history.push('/')
+                }
+                }/>)}
             </MenuContainer>
         </NavbarPhone>}
         </div>
