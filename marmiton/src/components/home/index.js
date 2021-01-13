@@ -9,7 +9,7 @@ const HomeComponent = () => {
     const [error, setError] = useState('')
     const [recipes, setRecipes] = useState([])
     useEffect(()=>{
-        getRecipes('kebab',setIsLoaded,setRecipes,setError)
+        getRecipes('pizza',setIsLoaded,setRecipes,setError)
     },[])
     console.log(recipes)
     return(
