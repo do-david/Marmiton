@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import {useHistory, useLocation } from 'react-router-dom'
+import {useHistory } from 'react-router-dom'
 import axios from 'axios'
-
+import {useSelector, useDispatch} from 'react-redux'
+import { toggleAuthentication } from '../../actions/authentication'
 
 const SignInComponent = () => {
     const [formState,setFormState] = useState({username:'',password:''})
     const [errorMessage,setErrorMessage]=useState('')
     const history = useHistory()
+    const dispatch = useDispatch()
+    const isAuthenticationState = useSelector(state => state.toggleAuthentication.isAuthenticatedValue)
+    console.log('IsAuthenticatedState =', isAuthenticationState)
     const submit = e => {
         e.preventDefault()
         if(!formState.username || !formState.password){
@@ -24,18 +28,15 @@ const SignInComponent = () => {
         })
         .then(res => {
             localStorage.setItem('token',res.headers['x-access-token'])
-            Login({history})
+            console.log('connexion ok')
+            dispatch(toggleAuthentication())
+            console.log('IsAuthenticatedState =', isAuthenticationState)
+            history.push('/user')
         })
         .catch(err => {
             setErrorMessage('Error servor, please try again')
             console.log(err)
         })
-    }
-    const Login = ({history}) => {
-        const token = localStorage.getItem('token')
-        if(token){
-            history.push('/user')
-        }
     }
     return (
         <div>
