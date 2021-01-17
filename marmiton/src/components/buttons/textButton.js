@@ -16,13 +16,14 @@ TextButton.propTypes = {
 }
 const StyledButton = styled.button`
     border: none;
+    font-weight:bold;
     background-color: inherit;
     padding: 15px 15px;
     font-size: 16px;
     cursor: pointer;
     display: inline-block;
     :hover {
-        background: #eee;
+        background: #ff6f61;
     }
 `
 export default TextButton;

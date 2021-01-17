@@ -5,6 +5,7 @@ import Home from '../components/home'
 import Header from '../components/header'
 import UserComponent from '../components/user'
 import PrivateRoute from '../utils/privateRoute'
+import CreateRecipe from '../components/user/createRecipe'
 
 const Routes = () => {
     return(
@@ -16,6 +17,8 @@ const Routes = () => {
           <Route path='/home' component={Home}>
           </Route>
           <PrivateRoute path='/user' component = {UserComponent}>
+          </PrivateRoute>
+          <PrivateRoute path='/create' component= {CreateRecipe}>
           </PrivateRoute>
         </Switch>
       </Router>
